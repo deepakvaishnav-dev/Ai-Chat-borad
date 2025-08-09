@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDKs & Libraries - AI Chatboard Documentation</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        .doc-container {
+            max-width: 900px;
+            margin: 100px auto 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        p, li {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        a.back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a.back-link:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="doc-container">
+        <h1>SDKs & Libraries</h1>
+        <p>AI Chatboard provides official SDKs and libraries to simplify integration and development.</p>
+        <h2>Available SDKs</h2>
+        <ul>
+            <li><strong>JavaScript SDK:</strong> Easily integrate AI Chatboard into web applications.</li>
+            <li><strong>Python SDK:</strong> Use AI Chatboard in backend services and scripts.</li>
+            <li><strong>Other Languages:</strong> SDKs for popular languages coming soon.</li>
+        </ul>
+        <h2>Installation</h2>
+        <p>Install the JavaScript SDK via npm:</p>
+        <pre><code>npm install aichatboard-sdk</code></pre>
+        <p>Install the Python SDK via pip:</p>
+        <pre><code>pip install aichatboard-sdk</code></pre>
+        <h2>Usage Example (JavaScript)</h2>
+        <pre><code>import AIChatboard from 'aichatboard-sdk';
+
+const chat = new AIChatboard({ apiKey: 'YOUR_API_KEY' });
+
+chat.sendMessage('Hello!').then(response => {
+    console.log(response);
+});
+</code></pre>
+        <h2>Usage Example (Python)</h2>
+        <pre><code>from aichatboard import AIChatboard
+
+chat = AIChatboard(api_key='YOUR_API_KEY')
+response = chat.send_message('Hello!')
+print(response)
+</code></pre>
+        <h2>Documentation & Support</h2>
+        <p>For detailed SDK documentation, visit the official AI Chatboard developer portal.</p>
+    </div>
+</body>
+</html>

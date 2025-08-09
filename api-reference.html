@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>API Reference - AI Chatboard Documentation</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        .doc-container {
+            max-width: 900px;
+            margin: 100px auto 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        p, li {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        a.back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a.back-link:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="doc-container">
+        <h1>API Reference</h1>
+        <p>This section provides detailed information about the AI Chatboard API endpoints and usage.</p>
+        <h2>Endpoint</h2>
+        <p><code>POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent</code></p>
+        <h2>Request Format</h2>
+        <pre><code>{
+  "contents": [{
+    "parts": [{
+      "text": "Your question here"
+    }]
+  }],
+  "generationConfig": {
+    "temperature": 0.7,
+    "topK": 40,
+    "topP": 0.95,
+    "maxOutputTokens": 1024
+  }
+}</code></pre>
+        <h2>Response Format</h2>
+        <p>The API returns a JSON object containing the generated content in the <code>candidates</code> array.</p>
+        <pre><code>{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Generated response text here"
+          }
+        ]
+      }
+    }
+  ]
+}</code></pre>
+        <h2>Error Handling</h2>
+        <ul>
+            <li><strong>401 Unauthorized:</strong> Invalid API key.</li>
+            <li><strong>403 Forbidden:</strong> API key not authorized.</li>
+            <li><strong>404 Not Found:</strong> Endpoint not found.</li>
+            <li><strong>429 Too Many Requests:</strong> Rate limit exceeded.</li>
+        </ul>
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Keep your API key secure and do not expose it publicly.</li>
+            <li>Handle errors gracefully in your application.</li>
+            <li>Respect rate limits to avoid service interruptions.</li>
+        </ul>
+    </div>
+</body>
+</html>

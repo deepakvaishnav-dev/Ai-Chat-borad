@@ -1,5 +1,4 @@
-// Gemini API Chatbot Script - Fixed Version with Correct API URL
-const API_KEY = 'AIzaSyAsq5ReWzb5f9-ny62gGJNx8uSZwMZQnVU'; // Replace this with your actual Gemini API key
+const API_KEY = 'AIzaSyCavp5WY25ahvTIjskrP6g5h9d3PVSoj8U'; // Replace this with your actual Gemini API key
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 // DOM Elements
@@ -20,9 +19,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // Setup demo and learn more buttons
+    setupDemoButtons();
+
     // Focus input on load
     messageInput.focus();
 });
+
+// Function to setup demo and learn more buttons
+function setupDemoButtons() {
+    // Try Demo button functionality
+    const tryDemoBtn = document.querySelector('.btn-primary');
+    if (tryDemoBtn) {
+        tryDemoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToSection('demo');
+            // Focus on input after scrolling
+            setTimeout(() => {
+                messageInput.focus();
+            }, 500);
+        });
+    }
+    
+    // Learn More button functionality
+    const learnMoreBtn = document.querySelector('.btn-secondary');
+    if (learnMoreBtn) {
+        learnMoreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'documentation.html';
+        });
+    }
+}
+
+// Function to scroll to section
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Make scrollToSection globally available for inline handlers
+window.scrollToSection = scrollToSection;
 
 // Function to call Gemini API
 async function getGeminiResponse(question) {
@@ -73,7 +111,12 @@ async function getGeminiResponse(question) {
         } else if (error.message.includes('403')) {
             return "❌ API key not authorized. Please enable the Gemini API in your Google Cloud Console";
         } else if (error.message.includes('429')) {
-            return "⚠️ Rate limit exceeded. Please wait a moment and try again";
+            // Disable send button temporarily
+            sendButton.disabled = true;
+            setTimeout(() => {
+                sendButton.disabled = false;
+            }, 30000); // Re-enable after 30 seconds
+            return "⚠️ Rate limit exceeded. Please wait a moment and try again.";
         } else {
             return "❌ I'm having trouble connecting to the AI service. Please check your internet connection and API key.";
         }
@@ -93,7 +136,16 @@ function addMessage(text, isUser = false) {
     content.className = 'message-content';
     
     const textElement = document.createElement('p');
-    textElement.textContent = text;
+    if (isUser) {
+        textElement.textContent = text;
+    } else {
+        // For bot messages, remove asterisks and preserve line breaks and tabs
+        const cleanedText = text.replace(/\*/g, '');
+        const formattedText = cleanedText
+            .replace(/\n/g, '<br>')          // Replace newlines with <br>
+            .replace(/\t/g, '&emsp;');       // Replace tabs with em space
+        textElement.innerHTML = formattedText;
+    }
     
     const time = document.createElement('span');
     time.className = 'message-time';
@@ -178,5 +230,47 @@ async function checkAPIHealth() {
     }
 }
 
+  
 // Run health check on page load
 checkAPIHealth();
+
+// Newsletter subscription popup
+document.addEventListener('DOMContentLoaded', () => {
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailInput = newsletterForm.querySelector('input[type="email"]');
+            if (emailInput && emailInput.value.trim() !== '') {
+                alert(`Thank you for subscribing with ${emailInput.value.trim()}! Your account has been added.`);
+                emailInput.value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+    }
+});
+
+// Handle newsletter form submission
+function handleNewsletterSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const emailInput = form.querySelector('input[type="email"]');
+    const email = emailInput.value.trim();
+    
+    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        // Show success message with right arrow
+        alert(`✅ Successfully subscribed with ${email}! Thank you for joining our newsletter.`);
+        emailInput.value = '';
+        
+        // Add visual feedback
+        const button = form.querySelector('button');
+        const originalIcon = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+            button.innerHTML = originalIcon;
+        }, 2000);
+    } else {
+        alert('Please enter a valid email address.');
+    }
+}
